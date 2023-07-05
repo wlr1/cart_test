@@ -1,10 +1,7 @@
+import React from "react";
 
-function App() {
-  return (
-      <div>
-     gg
-      </div>
-  )
-}
+const App: React.FC = () => {
+  return <div>ggf</div>;
+};
 
-export default App
+export default App;
