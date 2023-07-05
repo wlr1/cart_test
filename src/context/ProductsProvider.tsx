@@ -1,6 +1,4 @@
 import React, { createContext, ReactElement } from "react";
-import { Simulate } from "react-dom/test-utils";
-import error = Simulate.error;
 
 export type ProductType = {
   sku: string;
