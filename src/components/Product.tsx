@@ -20,7 +20,6 @@ const Product = ({
     `../assets/images/${product.sku}.jpg`,
     import.meta.url
   ).href;
-  console.log(img);
 
   const onAddToCart = () =>
     dispatch({ type: REDUCER_ACTION.ADD, payload: { ...product, qty: 1 } });

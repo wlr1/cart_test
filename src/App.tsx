@@ -1,11 +1,11 @@
-import React from "react";
 import Header from "./components/Header";
-import ProductList from "./components/ProductList";
-import Cart from "./components/Cart";
 import Footer from "./components/Footer";
+import Cart from "./components/Cart";
+import ProductList from "./components/ProductList";
+import { useState } from "react";
 
-const App: React.FC = () => {
-  const [viewCart, setViewCart] = React.useState<boolean>(false);
+function App() {
+  const [viewCart, setViewCart] = useState<boolean>(false);
 
   const pageContent = viewCart ? <Cart /> : <ProductList />;
 
@@ -18,6 +18,6 @@ const App: React.FC = () => {
   );
 
   return content;
-};
+}
 
 export default App;

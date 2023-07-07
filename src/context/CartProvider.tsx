@@ -1,4 +1,4 @@
-import { createContext, ReactElement, useMemo, useReducer } from "react";
+import { useMemo, useReducer, createContext, ReactElement } from "react";
 
 export type CartItemType = {
   sku: string;
@@ -32,8 +32,9 @@ const reducer = (
   switch (action.type) {
     case REDUCER_ACTION_TYPE.ADD: {
       if (!action.payload) {
-        throw new Error("action.payload is missing in ADD action");
+        throw new Error("action.payload missing in ADD action");
       }
+
       const { sku, name, price } = action.payload;
 
       const filteredCart: CartItemType[] = state.cart.filter(
@@ -50,7 +51,7 @@ const reducer = (
     }
     case REDUCER_ACTION_TYPE.REMOVE: {
       if (!action.payload) {
-        throw new Error("action.payload is missing in REMOVE action");
+        throw new Error("action.payload missing in REMOVE action");
       }
 
       const { sku } = action.payload;
@@ -63,7 +64,7 @@ const reducer = (
     }
     case REDUCER_ACTION_TYPE.QUANTITY: {
       if (!action.payload) {
-        throw new Error("action.payload is missing in QUANTITY action");
+        throw new Error("action.payload missing in QUANTITY action");
       }
 
       const { sku, qty } = action.payload;
@@ -73,7 +74,7 @@ const reducer = (
       );
 
       if (!itemExists) {
-        throw new Error("item must exist in order to update quantity");
+        throw new Error("Item must exist in order to update quantity");
       }
 
       const updatedItem: CartItemType = { ...itemExists, qty };
@@ -88,24 +89,24 @@ const reducer = (
       return { ...state, cart: [] };
     }
     default:
-      throw new Error("unindentified reducer action type");
+      throw new Error("Unidentified reducer action type");
   }
 };
 
 const useCartContext = (initCartState: CartStateType) => {
   const [state, dispatch] = useReducer(reducer, initCartState);
 
-  const REDUCER_ACTION = useMemo(() => {
+  const REDUCER_ACTIONS = useMemo(() => {
     return REDUCER_ACTION_TYPE;
   }, []);
 
-  const totalItems: number = state.cart.reduce((previousValue, cartItem) => {
+  const totalItems = state.cart.reduce((previousValue, cartItem) => {
     return previousValue + cartItem.qty;
   }, 0);
 
-  const totalPrice = new Intl.NumberFormat("lv-LV", {
+  const totalPrice = new Intl.NumberFormat("en-US", {
     style: "currency",
-    currency: "EUR",
+    currency: "USD",
   }).format(
     state.cart.reduce((previousValue, cartItem) => {
       return previousValue + cartItem.qty * cartItem.price;
@@ -118,21 +119,20 @@ const useCartContext = (initCartState: CartStateType) => {
     return itemA - itemB;
   });
 
-  return { dispatch, REDUCER_ACTION, totalItems, totalPrice, cart };
+  return { dispatch, REDUCER_ACTIONS, totalItems, totalPrice, cart };
 };
 
 export type UseCartContextType = ReturnType<typeof useCartContext>;
 
 const initCartContextState: UseCartContextType = {
   dispatch: () => {},
-  REDUCER_ACTION: REDUCER_ACTION_TYPE,
+  REDUCER_ACTIONS: REDUCER_ACTION_TYPE,
   totalItems: 0,
   totalPrice: "",
   cart: [],
 };
 
-export const CartContext =
-  createContext<UseCartContextType>(initCartContextState);
+const CartContext = createContext<UseCartContextType>(initCartContextState);
 
 type ChildrenType = { children?: ReactElement | ReactElement[] };
 

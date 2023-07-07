@@ -1,4 +1,4 @@
-import React, { createContext, ReactElement } from "react";
+import { createContext, ReactElement, useState } from "react";
 
 export type ProductType = {
   sku: string;
@@ -6,6 +6,7 @@ export type ProductType = {
   price: number;
 };
 
+//const initState: ProductType[] = []
 const initState: ProductType[] = [
   {
     sku: "item0001",
@@ -24,16 +25,16 @@ const initState: ProductType[] = [
   },
 ];
 
-export type useProductsContextType = { products: ProductType[] };
+export type UseProductsContextType = { products: ProductType[] };
 
-const initContextState: useProductsContextType = { products: [] };
+const initContextState: UseProductsContextType = { products: [] };
 
-const ProductsContext = createContext<useProductsContextType>(initContextState);
+const ProductsContext = createContext<UseProductsContextType>(initContextState);
 
 type ChildrenType = { children?: ReactElement | ReactElement[] };
 
 export const ProductsProvider = ({ children }: ChildrenType): ReactElement => {
-  const [products, setProducts] = React.useState<ProductType[]>(initState);
+  const [products, setProducts] = useState<ProductType[]>(initState);
 
   //fetching data from json-server
   // React.useEffect(() => {
@@ -50,7 +51,6 @@ export const ProductsProvider = ({ children }: ChildrenType): ReactElement => {
   //
   //   fetchProducts().then((products) => setProducts(products));
   // }, []);
-
   return (
     <ProductsContext.Provider value={{ products }}>
       {children}
