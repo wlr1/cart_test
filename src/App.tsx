@@ -1,11 +1,23 @@
 import React from "react";
-import Header from "./components/Header.tsx";
-import ProductList from "./components/ProductList.tsx";
-import Cart from "./components/Cart.tsx";
-import Footer from "./components/Footer.tsx";
+import Header from "./components/Header";
+import ProductList from "./components/ProductList";
+import Cart from "./components/Cart";
+import Footer from "./components/Footer";
 
 const App: React.FC = () => {
-  return <div></div>;
+  const [viewCart, setViewCart] = React.useState<boolean>(false);
+
+  const pageContent = viewCart ? <Cart /> : <ProductList />;
+
+  const content = (
+    <>
+      <Header viewCart={viewCart} setViewCart={setViewCart} />
+      {pageContent}
+      <Footer viewCart={viewCart} />
+    </>
+  );
+
+  return content;
 };
 
 export default App;

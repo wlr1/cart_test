@@ -1,7 +1,7 @@
 import React from "react";
 
-const Cart: React.FC = () => {
-  return <div></div>;
+const Cart = () => {
+  return <div>ggggg</div>;
 };
 
 export default Cart;
